@@ -1,2 +1,2 @@
-# DSA-Problems-Using-Java
-Sloving DSA problems using java untill i got placed.
+# DSA-Problems-Using-Python
+Sloving DSA problems using python untill i got placed.
