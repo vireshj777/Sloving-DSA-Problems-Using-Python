@@ -1,0 +1,44 @@
+Given a set of non-overlapping intervals[][] where intervals[i] = [starti , endi] represent the 
+start and the end of the ith event and intervals is sorted in ascending order by starti and a new 
+interval, insert the interval at the correct position such that after insertion, the intervals remain
+sorted. If the insertion results in overlapping intervals, then merge the overlapping intervals. Assume
+that the set of non-overlapping intervals is sorted based on start time.
+
+Example: 
+Input: intervals[][] = [[1, 3], [4, 5], [6, 7], [8, 10]], newInterval[] = [5, 6] 
+Output: [[1, 3], [4, 7], [8, 10]]
+Explanation: The intervals [4, 5] and [6, 7] are overlapping with [5, 6]. 
+So, they are merged into one interval [4, 7]. 
+
+Code:
+def mergeOverlap(intervals):
+    
+    # Sort intervals based on start values
+    intervals.sort()
+    
+    res = [intervals[0]]
+
+    for i in range(1, len(intervals)):
+        last = res[-1]
+        curr = intervals[i]
+
+        # If current interval overlaps with the last interval
+        # in the result, merge them 
+        if curr[0] <= last[1]: 
+            last[1] = max(last[1], curr[1])
+        else: 
+            res.append(curr)
+
+    return res
+
+def insertInterval(intervals, newInterval):
+    intervals.append(newInterval)
+    return mergeOverlap(intervals)
+
+if __name__ == "__main__":
+    intervals =  [[1, 3], [4, 5], [6, 7], [8, 10]]
+    newInterval = [5, 6]
+
+    res = insertInterval(intervals, newInterval)
+    for interval in res:
+        print(interval[0], interval[1])
