@@ -1,0 +1,66 @@
+Given a 2D grid m*n of characters and a word, find all occurrences of the given word in the grid.
+A word can be matched in all 8 directions at any point. Word is said to be found in a direction if
+all characters match in this direction (not in zig-zag form).The 8 directions are, Horizontally Left,
+Horizontally Right, Vertically Up, Vertically Down and 4 Diagonal directions.
+
+Note: The returning list should be lexicographically smallest. If the word can be found in multiple 
+directions starting from the same coordinates, the list should contain the coordinates only once. 
+
+Examples: 
+Input:
+grid = [[G,E,E,K,S,F,O,R,G,E,E,K,S], [G,E,E,K,S,Q,U,I,Z,G,E,E,K], [I,D,E,Q,A,P,R,A,C,T,I,C,E]]
+word = "GEEKS"
+Output: [[0,0], [0,8], [1,0]]
+
+Code:
+# This function checks if the given coordinate is valid
+
+def isValid(x, y, sizeX, sizeY):
+    return 0 <= x < sizeX and 0 <= y < sizeY
+
+def findWordInDirection(grid, n, m, word, index,
+                        x, y, dirX, dirY):
+    if index == len(word):
+        return True
+
+    if isValid(x, y, n, m) and word[index] == grid[x][y]:
+        return findWordInDirection(grid, n, m, word, index + 1, 
+                                   x + dirX, y + dirY, dirX, dirY)
+
+    return False
+
+def searchWord(grid, word):
+    ans = []
+    n = len(grid)
+    m = len(grid[0])
+
+    # Directions for 8 possible movements
+    directions = [(1, 0), (-1, 0), (0, 1), (0, -1),
+                  (1, 1), (1, -1), (-1, 1), (-1, -1)]
+
+    for i in range(n):
+        for j in range(m):
+          
+            # Check if the first character matches
+            if grid[i][j] == word[0]:  
+                for dirX, dirY in directions:
+                    if findWordInDirection(grid, n, m, word, 0, 
+                                           i, j, dirX, dirY):
+                        ans.append([i, j])
+                        break
+
+    return ans
+
+def printResult(ans):
+    for a in ans:
+       print(f"{{{a[0]},{a[1]}}}", end=" ")
+    print()
+
+if __name__ == "__main__":
+    grid = [['a', 'b', 'a', 'b'],
+            ['a', 'b', 'e', 'b'],
+            ['e', 'b', 'e', 'b']]
+    word = "abe"
+
+    ans = searchWord(grid, word)
+    printResult(ans)
