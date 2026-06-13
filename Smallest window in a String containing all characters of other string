@@ -1,0 +1,64 @@
+Given two strings s and p, the task is to find the smallest substring in s that contains all characters
+of p, including duplicates. If no such substring exists, return "". If multiple substrings of the same 
+length are found, return the one with the smallest starting index.
+
+Examples: 
+
+Input: s = "timetopractice", p = "toc"
+Output: toprac
+Explanation: "toprac" is the smallest substring in which "toc" can be found.
+
+Code:
+def hasallchars(s: str, p: str) -> bool:
+    count = [0] * 256
+
+    # Count the frequency of each character in the pattern
+    for ch in p:
+        count[ord(ch)] += 1
+
+    # For each character in the substring,decrement its count
+    for ch in s:
+        if count[ord(ch)] > 0:
+            count[ord(ch)] -= 1
+
+    # If all counts in the count array are zero,the substring contains all characters of the pattern
+    for val in count:
+        if val > 0:
+            return False
+
+    return True
+
+
+# Function to find the smallest substring containing all characters of the pattern
+def minWindow(s: str, p: str) -> str:
+    n = len(s)
+    minLen = float('inf')
+    result = ""
+
+    # Generate all substrings of the given string
+    for i in range(n):
+        for j in range(i, n):
+            sub = s[i:j + 1]
+
+            # Check if the substring contains all characters of the pattern
+            if hasallchars(sub, p):
+                currLen = len(sub)
+
+                # Update the result if the current substring is smaller
+                if currLen < minLen:
+                    minLen = currLen
+                    result = sub
+
+    return result
+
+
+if __name__ == "__main__":
+    s = "timetopractice"
+    p = "toc"
+
+    res = minWindow(s, p)
+
+    if res:
+        print(res)
+    else:
+        print("")
