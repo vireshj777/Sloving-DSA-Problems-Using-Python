@@ -1,0 +1,32 @@
+Given a sentence s, determine whether it is a palindrome sentence or not.
+A palindrome sentence is a sequence of characters that reads the same forward and backward after:
+Converting all uppercase letters to lowercase.
+Removing all non-alphanumeric characters (i.e., ignore spaces, punctuation, and symbols).
+
+Examples: 
+Input: s = "Too hot to hoot."
+Output: true
+Explanation: If we remove all non-alphanumeric characters and convert all uppercase letters to lowercase, 
+string s will become "toohottohoot" which is a palindrome.
+
+Code:
+def isPalinSent(s):
+    # create a new list having only 
+    # alphanumeric characters
+    s1 = []
+    for ch in s:
+        if ch.isalnum():
+            s1.append(ch.lower())
+	
+    # convert the new list to string
+    s1 = ''.join(s1)
+    
+    # find reverse of this new string
+    rev = s1[::-1]
+    
+    # compare string and its reverse
+    return s1 == rev
+
+if __name__ == "__main__":
+    s = "Too hot to hoot."
+    print("true" if isPalinSent(s) else "false")
