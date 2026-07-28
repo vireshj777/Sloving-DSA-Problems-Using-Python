@@ -1,0 +1,35 @@
+Given an array arr[] representing a histogram, where each element denotes the height of a bar and every bar has a uniform width of 1 unit, find the largest rectangular area that can be formed within the histogram. The rectangle must be formed using contiguous bars.
+
+Example: 
+
+Input: arr[] = [60, 20, 50, 40, 10, 50, 60]
+Output: 100
+Explanation: We get the maximum area by picking bars highlighted above in green (50, and 60). The area is computed (smallest height) * (no. of the picked bars) = 50 * 2 = 100.
+
+Code:
+def getMaxArea(arr):
+    res = 0
+    n = len(arr)
+    
+    for i in range(n):
+        curr = arr[i]
+        
+        # Traverse left while we have a greater height bar
+        j = i - 1
+        while j >= 0 and arr[j] >= arr[i]:
+            curr += arr[i]
+            j -= 1
+        
+        # Traverse right while we have a greater height bar
+        j = i + 1
+        while j < n and arr[j] >= arr[i]:
+            curr += arr[i]
+            j += 1
+        
+        res = max(res, curr)
+    
+    return res
+    
+if __name__ == "__main__":
+    arr = [60, 20, 50, 40, 10, 50, 60]
+    print(getMaxArea(arr))
