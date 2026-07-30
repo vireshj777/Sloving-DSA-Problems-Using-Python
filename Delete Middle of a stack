@@ -1,0 +1,30 @@
+Given a stack s, remove the middle element of it without using any additional data structure.
+
+Input: s = [10, 20, 30, 40, 50]
+Output: s = [10, 20, 40, 50]
+Explanation: After deleting the mid which is 30, stack will look like [10, 20, 40, 50].
+
+Code:
+def delete_middle(stack):
+    elements = []
+
+    # Transfer stack elements to a list
+    while stack:
+        elements.append(stack.pop())
+
+    mid_index = len(elements) // 2
+
+    # Remove the middle element
+    elements.pop(mid_index)
+
+    # Push elements back onto the stack in reverse order
+    for i in range(len(elements) - 1, -1, -1):
+        stack.append(elements[i])
+
+if __name__=="__main__":
+    stack = [10, 20, 30, 40, 50]
+    
+    delete_middle(stack)
+    
+    while stack:
+        print(stack.pop(), end=' ')
