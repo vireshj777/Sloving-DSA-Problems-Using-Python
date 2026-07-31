@@ -1,0 +1,46 @@
+Given a string s consisting of opening and closing parenthesis '(' and ')', find the length of the longest valid parenthesis substring.
+A valid parenthesis substring is one where every opening bracket '(' has a corresponding closing bracket ')' in the correct order.
+
+Examples: 
+
+Input: s = "())"
+Output: 2
+Explanation: The longest valid parentheses substring is "()".
+
+Code:
+def maxLength(s):
+    st = []
+
+    # Push -1 as the initial index to 
+    # handle the edge case
+    st.append(-1)
+    maxLen = 0
+
+    # Traverse the string
+    for i in range(len(s)):
+
+        # If we encounter an opening parenthesis,
+        # push its index
+        if s[i] == '(':
+            st.append(i)
+        else:
+
+            # If we encounter a closing parenthesis, 
+            # pop the stack
+            st.pop()
+
+            # If stack is empty, push the current index
+            # as a base for the next valid substring
+            if not st:
+                st.append(i)
+            else:
+              
+                # Update maxLength with the current length 
+                # of the valid parentheses substring
+                maxLen = max(maxLen, i - st[-1])
+
+    return maxLen
+
+if __name__ == "__main__":
+    s = "(()())"
+    print(maxLength(s))
