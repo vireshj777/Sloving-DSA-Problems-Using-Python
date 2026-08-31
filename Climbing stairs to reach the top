@@ -1,0 +1,31 @@
+Given n stairs, and a person standing at the ground wants to climb stairs to reach the top. The person can climb either 1 stair or 2 stairs at a time, count the number of ways the person can reach at the top.
+Examples:
+
+Input: n = 1                                                                                                                                                 
+Output: 1 
+Explanation: There is only one way to climb 1 stair. 
+
+Code:
+def countWaysRec(n, dp):
+  
+    # Base cases
+    if n == 0 or n == 1:
+        return 1
+
+    # if the result for this subproblem is 
+    # already computed then return it
+    if dp[n] != -1:
+        return dp[n]
+
+    dp[n] = countWaysRec(n - 1, dp) + countWaysRec(n - 2, dp)
+    return dp[n]
+
+def countWays(n):
+  
+    # dp array to store the results
+    dp = [-1] * (n + 1)
+    return countWaysRec(n, dp)
+
+if __name__ == "__main__":
+    n = 4
+    print(countWays(n))
